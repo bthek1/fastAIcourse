@@ -94,19 +94,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="fastAIcourse - Lession 1:">
 <meta property="og:description" content="FastAI course lesson one">
-<meta property="og:image" content="https://bthek1.github.io/fastAIcourse/00_Lession1_files/figure-html/cell-12-output-1.png">
+<meta property="og:image" content="https://bthek1.github.io/fastAIcourse/00_Lession1_files/figure-html/cell-12-output-2.png">
 <meta property="og:site-name" content="fastAIcourse">
-<meta property="og:image:height" content="192">
+<meta property="og:image:height" content="162">
 <meta property="og:image:width" content="256">
 <meta name="twitter:title" content="fastAIcourse - Lession 1:">
 <meta name="twitter:description" content="FastAI course lesson one">
-<meta name="twitter:image" content="https://bthek1.github.io/fastAIcourse/00_Lession1_files/figure-html/cell-12-output-1.png">
-<meta name="twitter:image-height" content="192">
+<meta name="twitter:image" content="https://bthek1.github.io/fastAIcourse/00_Lession1_files/figure-html/cell-12-output-2.png">
+<meta name="twitter:image-height" content="162">
 <meta name="twitter:image-width" content="256">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -156,6 +159,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Lession 1:</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lession2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lession 2:</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -167,8 +176,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#check-for-all-installs-and-versions" id="toc-check-for-all-installs-and-versions" class="nav-link active" data-scroll-target="#check-for-all-installs-and-versions">Check for all installs and versions</a></li>
-  <li><a href="#generate-data-images" id="toc-generate-data-images" class="nav-link" data-scroll-target="#generate-data-images">Generate Data Images</a></li>
-  <li><a href="#training-the-model" id="toc-training-the-model" class="nav-link" data-scroll-target="#training-the-model">Training the model</a></li>
+  <li><a href="#generate-data-images" id="toc-generate-data-images" class="nav-link" data-scroll-target="#generate-data-images">Generate Data Images</a>
+  <ul class="collapse">
+  <li><a href="#download_pic" id="toc-download_pic" class="nav-link" data-scroll-target="#download_pic">download_pic</a></li>
+  <li><a href="#create_searches_folder" id="toc-create_searches_folder" class="nav-link" data-scroll-target="#create_searches_folder">create_searches_folder</a></li>
+  <li><a href="#download_search_images" id="toc-download_search_images" class="nav-link" data-scroll-target="#download_search_images">download_search_images</a></li>
+  <li><a href="#verify_pics" id="toc-verify_pics" class="nav-link" data-scroll-target="#verify_pics">verify_pics</a></li>
+  <li><a href="#resize_pics" id="toc-resize_pics" class="nav-link" data-scroll-target="#resize_pics">resize_pics</a></li>
+  <li><a href="#create_data_folder" id="toc-create_data_folder" class="nav-link" data-scroll-target="#create_data_folder">create_data_folder</a></li>
+  </ul></li>
+  <li><a href="#creating-the-model" id="toc-creating-the-model" class="nav-link" data-scroll-target="#creating-the-model">Creating the model</a></li>
+  <li><a href="#traning-the-model" id="toc-traning-the-model" class="nav-link" data-scroll-target="#traning-the-model">Traning the model</a></li>
+  <li><a href="#step-3-use-our-model-and-build-your-own" id="toc-step-3-use-our-model-and-build-your-own" class="nav-link" data-scroll-target="#step-3-use-our-model-and-build-your-own">Step 3: Use our model (and build your own!)</a></li>
+  <li><a href="#deep-learning-is-not-just-for-image-classification" id="toc-deep-learning-is-not-just-for-image-classification" class="nav-link" data-scroll-target="#deep-learning-is-not-just-for-image-classification">Deep Learning Is Not Just for Image Classification</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/bthek1/fastAIcourse/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -253,52 +273,187 @@ Build cuda_11.8.r11.8/compiler.31833905_0</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastbook <span class="im">import</span> search_images_ddg</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastdownload <span class="im">import</span> download_url</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> duckduckgo_search <span class="im">import</span> ddg_images</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_images(term, max_images<span class="op">=</span><span class="dv">200</span>): <span class="cf">return</span> L(ddg_images(term, max_results<span class="op">=</span>max_images)).itemgot(<span class="st">'image'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_pic(name):   </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># File path of the image</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    image_path <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.jpg'</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if the image file exists</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> os.path.exists(image_path):</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Image file exists."</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Image file does not exist."</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        download_url(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            search_images_ddg(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            max_images<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>], <span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.jpg'</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            show_progress<span class="op">=</span><span class="va">False</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Image.<span class="bu">open</span>(<span class="ss">f'</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.jpg'</span>).to_thumb(<span class="dv">256</span>,<span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<hr>
+<p><a href="https://github.com/bthek1/fastAIcourse/blob/main/fastAIcourse/core.py#L8" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="download_pic" class="level3">
+<h3 class="anchored" data-anchor-id="download_pic">download_pic</h3>
+<blockquote class="blockquote">
+<pre><code> download_pic (name)</code></pre>
+</blockquote>
 <p>Let’s start by searching for a bird photo and seeing what kind of result we get. We’ll start by getting URLs from a search:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>urls <span class="op">=</span> search_images(<span class="st">'bird photos'</span>, max_images<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>urls[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>download_pic(<span class="st">'bird'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Image file exists.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="00_Lession1_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <p>…and then download a URL and take a look at it:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastdownload <span class="im">import</span> download_url</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dest <span class="op">=</span> <span class="st">'bird.jpg'</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>download_url(urls[<span class="dv">0</span>], dest, show_progress<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> Image.<span class="bu">open</span>(dest)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>im.to_thumb(<span class="dv">256</span>,<span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="00_Lession1_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
-</div>
-</div>
 <p>Now let’s do the same with “forest photos”:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>download_url(search_images(<span class="st">'forest photos'</span>, max_images<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>], <span class="st">'forest.jpg'</span>, show_progress<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(<span class="st">'forest.jpg'</span>).to_thumb(<span class="dv">256</span>,<span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>download_pic(<span class="st">'forest'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Image file exists.</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<p><img src="00_Lession1_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+<p><img src="00_Lession1_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_searches_folder(folder_path, searches):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> searches:</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        dest <span class="op">=</span> (folder_path<span class="op">/</span>i)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        dest.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>, parents<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'created </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> folder'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/bthek1/fastAIcourse/blob/main/fastAIcourse/core.py#L27" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="create_searches_folder" class="level3">
+<h3 class="anchored" data-anchor-id="create_searches_folder">create_searches_folder</h3>
+<blockquote class="blockquote">
+<pre><code> create_searches_folder (folder_path, searches)</code></pre>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_search_images(folder_path, searches, amount):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> searches:</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"downloading images for: </span><span class="sc">{</span>j<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        download_images(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>            folder_path<span class="op">/</span>j,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>            urls<span class="op">=</span>search_images_ddg(<span class="ss">f'</span><span class="sc">{</span>j<span class="sc">}</span><span class="ss"> photo'</span>, amount),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            n_workers<span class="op">=</span><span class="dv">16</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/bthek1/fastAIcourse/blob/main/fastAIcourse/core.py#L35" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="download_search_images" class="level3">
+<h3 class="anchored" data-anchor-id="download_search_images">download_search_images</h3>
+<blockquote class="blockquote">
+<pre><code> download_search_images (folder_path, searches, amount)</code></pre>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_pics(folder_path):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    failed <span class="op">=</span> verify_images(get_image_files(folder_path))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    failed.<span class="bu">map</span>(Path.unlink)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Number of images failed: </span><span class="sc">{</span><span class="bu">len</span>(failed)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/bthek1/fastAIcourse/blob/main/fastAIcourse/core.py#L46" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="verify_pics" class="level3">
+<h3 class="anchored" data-anchor-id="verify_pics">verify_pics</h3>
+<blockquote class="blockquote">
+<pre><code> verify_pics (folder_path)</code></pre>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resize_pics(folder_path, searches):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> searches:</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        resize_images(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            folder_path<span class="op">/</span>k,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            max_size<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            dest<span class="op">=</span>folder_path<span class="op">/</span>k,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            max_workers<span class="op">=</span><span class="dv">8</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"resizing images for: </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/bthek1/fastAIcourse/blob/main/fastAIcourse/core.py#L53" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="resize_pics" class="level3">
+<h3 class="anchored" data-anchor-id="resize_pics">resize_pics</h3>
+<blockquote class="blockquote">
+<pre><code> resize_pics (folder_path, searches)</code></pre>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_data_folder(folder_path, searches, amount):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> os.path.exists(folder_path):</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Folder already exists: </span><span class="sc">{</span>folder_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:   </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        create_searches_folder(folder_path, searches)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        download_search_images(folder_path, searches, amount)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        verify_pics(folder_path)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        resize_pics(folder_path, searches)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/bthek1/fastAIcourse/blob/main/fastAIcourse/core.py#L65" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="create_data_folder" class="level3">
+<h3 class="anchored" data-anchor-id="create_data_folder">create_data_folder</h3>
+<blockquote class="blockquote">
+<pre><code> create_data_folder (folder_path, searches, amount)</code></pre>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>searches <span class="op">=</span> <span class="st">'forest'</span>,<span class="st">'bird'</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> Path(<span class="st">'bird_or_not'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>create_data_folder(path, searches, <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Folder already exists: bird_or_not</code></pre>
 </div>
 </div>
 </section>
-<section id="training-the-model" class="level2">
-<h2 class="anchored" data-anchor-id="training-the-model">Training the model</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dls</span> = DataBlock<span class="er">(</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">blocks</span><span class="op">=</span><span class="va">(</span>ImageBlock, CategoryBlock<span class="va">)</span>, </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">get_items</span><span class="op">=</span>get_image_files, </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">splitter</span><span class="op">=</span>RandomSplitter<span class="kw">(</span><span class="va">valid_pct</span><span class="op">=</span>0.2, <span class="va">seed</span><span class="op">=</span>42<span class="kw">)</span><span class="ex">,</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">get_y</span><span class="op">=</span>parent_label,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">item_tfms</span><span class="op">=</span>[Resize<span class="kw">(</span><span class="ex">192,</span> method=<span class="st">'squish'</span><span class="kw">)</span><span class="ex">]</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">)</span><span class="ex">.dataloaders</span><span class="er">(</span><span class="ex">path</span><span class="kw">)</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">dls.show_batch</span><span class="er">(</span><span class="va">max_n</span><span class="op">=</span>6<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-model">Creating the model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> DataBlock(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    blocks<span class="op">=</span>(ImageBlock, CategoryBlock), </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    get_items<span class="op">=</span>get_image_files, </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    splitter<span class="op">=</span>RandomSplitter(valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    get_y<span class="op">=</span>parent_label,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    item_tfms<span class="op">=</span>[Resize(<span class="dv">192</span>, method<span class="op">=</span><span class="st">'squish'</span>)]</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>).dataloaders(path)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>dls.show_batch(max_n<span class="op">=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="00_Lession1_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
 <p>Here what each of the <code>DataBlock</code> parameters means:</p>
 <pre><code>blocks=(ImageBlock, CategoryBlock),</code></pre>
 <p>The inputs to our model are images, and the outputs are categories (in this case, “bird” or “forest”).</p>
@@ -310,6 +465,207 @@ Build cuda_11.8.r11.8/compiler.31833905_0</code></pre>
 <p>The labels (<code>y</code> values) is the name of the <code>parent</code> of each file (i.e.&nbsp;the name of the folder they’re in, which will be <em>bird</em> or <em>forest</em>).</p>
 <pre><code>item_tfms=[Resize(192, method='squish')]</code></pre>
 <p>Before training, resize each image to 192x192 pixels by “squishing” it (as opposed to cropping it).</p>
+</section>
+<section id="traning-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="traning-the-model">Traning the model</h2>
+<p>Now we’re ready to train our model. The fastest widely used computer vision model is <code>resnet18</code>. You can train this in a few minutes, even on a CPU! (On a GPU, it generally takes under 10 seconds…)</p>
+<p><code>fastai</code> comes with a helpful <code>fine_tune()</code> method which automatically uses best practices for fine tuning a pre-trained model, so we’ll use that.1</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet18, metrics<span class="op">=</span>error_rate)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\bthek\anaconda3\envs\newAI\Lib\site-packages\torchvision\models\_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+C:\Users\bthek\anaconda3\envs\newAI\Lib\site-packages\torchvision\models\_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">epoch</th>
+<th data-quarto-table-cell-role="th">train_loss</th>
+<th data-quarto-table-cell-role="th">valid_loss</th>
+<th data-quarto-table-cell-role="th">error_rate</th>
+<th data-quarto-table-cell-role="th">time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.720669</td>
+<td>0.809375</td>
+<td>0.218750</td>
+<td>00:03</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">epoch</th>
+<th data-quarto-table-cell-role="th">train_loss</th>
+<th data-quarto-table-cell-role="th">valid_loss</th>
+<th data-quarto-table-cell-role="th">error_rate</th>
+<th data-quarto-table-cell-role="th">time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.034033</td>
+<td>0.110016</td>
+<td>0.031250</td>
+<td>00:01</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.018758</td>
+<td>0.014891</td>
+<td>0.015625</td>
+<td>00:01</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.012558</td>
+<td>0.004601</td>
+<td>0.000000</td>
+<td>00:01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="step-3-use-our-model-and-build-your-own" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-use-our-model-and-build-your-own">Step 3: Use our model (and build your own!)</h2>
+<p>Let’s see what our model thinks about that bird we downloaded at the start:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>is_bird,_,probs <span class="op">=</span> learn.predict(PILImage.create(<span class="st">'bird.jpg'</span>))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"This is a: </span><span class="sc">{</span>is_bird<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Probability it's a bird: </span><span class="sc">{</span>probs[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>This is a: bird.
+Probability it's a bird: 0.9999</code></pre>
+</div>
+</div>
+</section>
+<section id="deep-learning-is-not-just-for-image-classification" class="level2">
+<h2 class="anchored" data-anchor-id="deep-learning-is-not-just-for-image-classification">Deep Learning Is Not Just for Image Classification</h2>
+<ul>
+<li>SegmentationDataLoaders - Easier than datablocks</li>
+</ul>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.CAMVID_TINY)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> SegmentationDataLoaders.from_label_func(</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    path, bs<span class="op">=</span><span class="dv">8</span>, fnames <span class="op">=</span> get_image_files(path<span class="op">/</span><span class="st">"images"</span>),</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    label_func <span class="op">=</span> <span class="kw">lambda</span> o: path<span class="op">/</span><span class="st">'labels'</span><span class="op">/</span><span class="ss">f'</span><span class="sc">{</span>o<span class="sc">.</span>stem<span class="sc">}</span><span class="ss">_P</span><span class="sc">{</span>o<span class="sc">.</span>suffix<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    codes <span class="op">=</span> np.loadtxt(path<span class="op">/</span><span class="st">'codes.txt'</span>, dtype<span class="op">=</span><span class="bu">str</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> unet_learner(dls, resnet34)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Tabular analysis - income prediction</li>
+</ul>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.tabular.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.ADULT_SAMPLE)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> TabularDataLoaders.from_csv(path<span class="op">/</span><span class="st">'adult.csv'</span>, path<span class="op">=</span>path, y_names<span class="op">=</span><span class="st">"salary"</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    cat_names <span class="op">=</span> [<span class="st">'workclass'</span>, <span class="st">'education'</span>, <span class="st">'marital-status'</span>, <span class="st">'occupation'</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'relationship'</span>, <span class="st">'race'</span>],</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    cont_names <span class="op">=</span> [<span class="st">'age'</span>, <span class="st">'fnlwgt'</span>, <span class="st">'education-num'</span>],</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    procs <span class="op">=</span> [Categorify, FillMissing, Normalize])</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> tabular_learner(dls, metrics<span class="op">=</span>accuracy)</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Collaboration filtering - ratings/ recommendations</li>
+</ul>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.collab <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.ML_SAMPLE)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> CollabDataLoaders.from_csv(path<span class="op">/</span><span class="st">'ratings.csv'</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> collab_learner(dls, y_range<span class="op">=</span>(<span class="fl">0.5</span>,<span class="fl">5.5</span>))</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">10</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>learn.show_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Example</li>
+</ul>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.text.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> TextDataLoaders.from_folder(untar_data(URLs.IMDB), valid<span class="op">=</span><span class="st">'test'</span>, bs<span class="op">=</span><span class="dv">32</span>)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> text_classifier_learner(dls, AWD_LSTM, drop_mult<span class="op">=</span><span class="fl">0.5</span>, metrics<span class="op">=</span>accuracy)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">4</span>, <span class="fl">1e-2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This reduces the batch size to 32 (we will explain this later). If you keep hitting the same error, change 32 to 16</p>
+<ul>
+<li>Example</li>
+</ul>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.text.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> TextDataLoaders.from_folder(untar_data(URLs.IMDB), valid<span class="op">=</span><span class="st">'test'</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> text_classifier_learner(dls, AWD_LSTM, drop_mult<span class="op">=</span><span class="fl">0.5</span>, </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                                metrics<span class="op">=</span>accuracy)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">4</span>, <span class="fl">1e-2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

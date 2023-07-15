@@ -3,3 +3,4 @@ website:
     contents:
       - index.ipynb
       - 00_Lession1.ipynb
+      - 01_Lession2.ipynb
