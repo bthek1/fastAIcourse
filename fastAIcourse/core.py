@@ -19,6 +19,7 @@ def download_pic(name):
             max_images=1)[0], f'{name}.jpg',
             show_progress=False
         )
+
     return Image.open(f'{name}.jpg').to_thumb(256,256)
 
 # %% ../nbs/00_Lession1.ipynb 18
