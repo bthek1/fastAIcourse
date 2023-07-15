@@ -5,4 +5,11 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://bthek1.github.io',
                 'git_url': 'https://github.com/bthek1/fastAIcourse',
                 'lib_path': 'fastAIcourse'},
-  'syms': {'fastAIcourse.core': {'fastAIcourse.core.foo': ('core.html#foo', 'fastAIcourse/core.py')}}}
+  'syms': { 'fastAIcourse.core': { 'fastAIcourse.core.create_data_folder': ('lession1.html#create_data_folder', 'fastAIcourse/core.py'),
+                                   'fastAIcourse.core.create_searches_folder': ( 'lession1.html#create_searches_folder',
+                                                                                 'fastAIcourse/core.py'),
+                                   'fastAIcourse.core.download_pic': ('lession1.html#download_pic', 'fastAIcourse/core.py'),
+                                   'fastAIcourse.core.download_search_images': ( 'lession1.html#download_search_images',
+                                                                                 'fastAIcourse/core.py'),
+                                   'fastAIcourse.core.resize_pics': ('lession1.html#resize_pics', 'fastAIcourse/core.py'),
+                                   'fastAIcourse.core.verify_pics': ('lession1.html#verify_pics', 'fastAIcourse/core.py')}}}
