@@ -40,5 +40,33 @@
     "title": "Lession 1:",
     "section": "Generate Data Images",
     "text": "Generate Data Images\n\nfrom fastbook import search_images_ddg\nfrom fastdownload import download_url\nfrom fastai.vision.all import *"
+  },
+  {
+    "objectID": "lession1.html",
+    "href": "lession1.html",
+    "title": "Lession 1:",
+    "section": "",
+    "text": "!conda list | findstr \"pytorch\"\n\npytorch                   2.0.1           py3.11_cuda11.8_cudnn8_0    pytorch\npytorch-cuda              11.8                 h24eeafa_5    pytorch\npytorch-ignite            0.4.12                   pypi_0    pypi\npytorch-lightning         2.0.5                    pypi_0    pypi\npytorch-mutex             1.0                        cuda    pytorch\n\n\n\n!nvcc --version\n\nnvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2022 NVIDIA Corporation\nBuilt on Wed_Sep_21_10:41:10_Pacific_Daylight_Time_2022\nCuda compilation tools, release 11.8, V11.8.89\nBuild cuda_11.8.r11.8/compiler.31833905_0\n\n\n\n!pip list | findstr \"fastai\"\n\nfastai                   2.7.12\n\n\n\n!pip list | findstr \"duckduckgo\"\n\nduckduckgo-search        3.8.3\n\n\n\n!pip list | findstr \"fastbook\"\n\nfastbook                 0.0.29\n\n\n\nimport torch\n\n\ntorch.cuda.is_available()\n\nTrue"
+  },
+  {
+    "objectID": "lession1.html#check-for-all-installs-and-versions",
+    "href": "lession1.html#check-for-all-installs-and-versions",
+    "title": "Lession 1:",
+    "section": "",
+    "text": "!conda list | findstr \"pytorch\"\n\npytorch                   2.0.1           py3.11_cuda11.8_cudnn8_0    pytorch\npytorch-cuda              11.8                 h24eeafa_5    pytorch\npytorch-ignite            0.4.12                   pypi_0    pypi\npytorch-lightning         2.0.5                    pypi_0    pypi\npytorch-mutex             1.0                        cuda    pytorch\n\n\n\n!nvcc --version\n\nnvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2022 NVIDIA Corporation\nBuilt on Wed_Sep_21_10:41:10_Pacific_Daylight_Time_2022\nCuda compilation tools, release 11.8, V11.8.89\nBuild cuda_11.8.r11.8/compiler.31833905_0\n\n\n\n!pip list | findstr \"fastai\"\n\nfastai                   2.7.12\n\n\n\n!pip list | findstr \"duckduckgo\"\n\nduckduckgo-search        3.8.3\n\n\n\n!pip list | findstr \"fastbook\"\n\nfastbook                 0.0.29\n\n\n\nimport torch\n\n\ntorch.cuda.is_available()\n\nTrue"
+  },
+  {
+    "objectID": "lession1.html#generate-data-images",
+    "href": "lession1.html#generate-data-images",
+    "title": "Lession 1:",
+    "section": "Generate Data Images",
+    "text": "Generate Data Images\n\nfrom fastbook import search_images_ddg\nfrom fastdownload import download_url\nfrom fastai.vision.all import *\n\n\nfrom duckduckgo_search import ddg_images\nfrom fastcore.all import *\n\ndef search_images(term, max_images=200): return L(ddg_images(term, max_results=max_images)).itemgot('image')\n\nLet’s start by searching for a bird photo and seeing what kind of result we get. We’ll start by getting URLs from a search:\n\nurls = search_images('bird photos', max_images=1)\nurls[0]\n\n…and then download a URL and take a look at it:\n\nfrom fastdownload import download_url\ndest = 'bird.jpg'\ndownload_url(urls[0], dest, show_progress=False)\n\nfrom fastai.vision.all import *\nim = Image.open(dest)\nim.to_thumb(256,256)\n\n\n\n\nNow let’s do the same with “forest photos”:\n\ndownload_url(search_images('forest photos', max_images=1)[0], 'forest.jpg', show_progress=False)\nImage.open('forest.jpg').to_thumb(256,256)"
+  },
+  {
+    "objectID": "lession1.html#training-the-model",
+    "href": "lession1.html#training-the-model",
+    "title": "Lession 1:",
+    "section": "Training the model",
+    "text": "Training the model\ndls = DataBlock(\n    blocks=(ImageBlock, CategoryBlock), \n    get_items=get_image_files, \n    splitter=RandomSplitter(valid_pct=0.2, seed=42),\n    get_y=parent_label,\n    item_tfms=[Resize(192, method='squish')]\n).dataloaders(path)\n\ndls.show_batch(max_n=6)\nHere what each of the DataBlock parameters means:\nblocks=(ImageBlock, CategoryBlock),\nThe inputs to our model are images, and the outputs are categories (in this case, “bird” or “forest”).\nget_items=get_image_files, \nTo find all the inputs to our model, run the get_image_files function (which returns a list of all image files in a path).\nsplitter=RandomSplitter(valid_pct=0.2, seed=42),\nSplit the data into training and validation sets randomly, using 20% of the data for the validation set.\nget_y=parent_label,\nThe labels (y values) is the name of the parent of each file (i.e. the name of the folder they’re in, which will be bird or forest).\nitem_tfms=[Resize(192, method='squish')]\nBefore training, resize each image to 192x192 pixels by “squishing” it (as opposed to cropping it)."
   }
 ]
