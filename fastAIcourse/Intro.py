@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['download_pic', 'create_searches_folder', 'download_search_images', 'verify_pics', 'resize_pics', 'create_data_folder']
 
-# %% ../nbs/00_Lession1.ipynb 12
+# %% ../nbs/00_Lession1.ipynb 11
 #|code-fold: true
 def download_pic(name):   
     # File path of the image
@@ -22,7 +22,7 @@ def download_pic(name):
 
     return Image.open(f'{name}.jpg').to_thumb(256,256)
 
-# %% ../nbs/00_Lession1.ipynb 18
+# %% ../nbs/00_Lession1.ipynb 17
 #|code-fold: true
 def create_searches_folder(folder_path, searches):
     for i in searches:
@@ -30,7 +30,7 @@ def create_searches_folder(folder_path, searches):
         dest.mkdir(exist_ok=True, parents=True)
         print(f'created {i} folder')
 
-# %% ../nbs/00_Lession1.ipynb 19
+# %% ../nbs/00_Lession1.ipynb 18
 #|code-fold: true
 def download_search_images(folder_path, searches, amount):
     for j in searches:
@@ -41,14 +41,14 @@ def download_search_images(folder_path, searches, amount):
             n_workers=16
         )
 
-# %% ../nbs/00_Lession1.ipynb 20
+# %% ../nbs/00_Lession1.ipynb 19
 #|code-fold: true
 def verify_pics(folder_path):
     failed = verify_images(get_image_files(folder_path))
     failed.map(Path.unlink)
     print(f"Number of images failed: {len(failed)}")
 
-# %% ../nbs/00_Lession1.ipynb 21
+# %% ../nbs/00_Lession1.ipynb 20
 #|code-fold: true
 def resize_pics(folder_path, searches):
     for k in searches:
@@ -60,7 +60,7 @@ def resize_pics(folder_path, searches):
         )
         print(f"resizing images for: {k}")
 
-# %% ../nbs/00_Lession1.ipynb 22
+# %% ../nbs/00_Lession1.ipynb 21
 #|code-fold: true
 def create_data_folder(folder_path, searches, amount):
     if os.path.exists(folder_path):
