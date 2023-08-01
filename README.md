@@ -10,6 +10,73 @@
 nbdev_prepare
 ```
 
+``` python
+!pip list | grep nbdev
+```
+
+``` python
+from nbdev.export import *
+from nbdev.test import *
+```
+
+``` python
+??nbdev_help()
+```
+
+    Object `nbdev_help()` not found.
+
+``` python
+??nbdev
+```
+
+    Type:        module
+    String form: <module 'nbdev' from '/home/ben/mambaforge/envs/fast/lib/python3.11/site-packages/nbdev/__init__.py'>
+    File:        ~/mambaforge/envs/fast/lib/python3.11/site-packages/nbdev/__init__.py
+    Source:     
+    __version__ = "2.3.12"
+
+    from .doclinks import nbdev_export
+    from .showdoc import show_doc
+
+``` python
+??nbdev_export
+```
+
+    Signature:
+    nbdev_export(
+        path: str = None,
+        *,
+        symlinks: bool = False,
+        file_glob: str = '*.ipynb',
+        file_re: str = None,
+        folder_re: str = None,
+        skip_file_glob: str = None,
+        skip_file_re: str = '^[_.]',
+        skip_folder_re: str = '^[_.]',
+    )
+    Source:   
+    @call_parse
+    @delegates(nbglob_cli)
+    def nbdev_export(
+        path:str=None, # Path or filename
+        **kwargs):
+        "Export notebooks in `path` to Python modules"
+        if os.environ.get('IN_TEST',0): return
+        files = nbglob(path=path, as_path=True, **kwargs).sorted('name')
+        for f in files: nb_export(f)
+        add_init(get_config().lib_path)
+        _build_modidx()
+    File:      ~/mambaforge/envs/fast/lib/python3.11/site-packages/nbdev/doclinks.py
+    Type:      function
+
+``` python
+nbdev_export()
+```
+
+``` python
+??nbdev_test()
+```
+
 - Git stuff
 
 ``` sh
