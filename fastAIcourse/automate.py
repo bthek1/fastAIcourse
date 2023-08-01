@@ -3,8 +3,7 @@
 # %% auto 0
 __all__ = ['prepare', 'gacp']
 
-# %% ../nbs/91_Nbdev.ipynb 5
-#|eval: false
+# %% ../nbs/91_Nbdev.ipynb 4
 def prepare():
     "Export, test, and clean notebooks, and render README if needed"
     import nbdev.test, nbdev.clean, nbdev.quarto
@@ -23,8 +22,7 @@ def prepare():
     nbdev.quarto.nbdev_readme.__wrapped__(chk_time=True)
     print(f'nbdev_readme finshed')
 
-# %% ../nbs/91_Nbdev.ipynb 10
-#|eval: false
+# %% ../nbs/91_Nbdev.ipynb 7
 def gacp(
     comment:str="update"
 ):
