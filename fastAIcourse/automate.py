@@ -9,18 +9,18 @@ def prepare():
     import nbdev.test, nbdev.clean, nbdev.quarto
     
     nbdev.quarto.nbdev_export.__wrapped__()
-    print(f'### nbdev_export finshed ###')
+    print(f'### nbdev_export finished ###')
     nbdev.test.nbdev_test.__wrapped__(
         n_workers = 8,  # Number of workers
         timing = True,  # Time each notebook to see which are slow
     )
-    print(f'### nbdev_test finshed ###')
+    print(f'### nbdev_test finished ###')
     nbdev.clean.nbdev_clean.__wrapped__()
-    print(f'### nbdev_clean finshed ###')
+    print(f'### nbdev_clean finished ###')
     nbdev.quarto.refresh_quarto_yml()
-    print(f'### refresh_quarto_yml finshed ###')
+    print(f'### refresh_quarto_yml finished ###')
     nbdev.quarto.nbdev_readme.__wrapped__(chk_time=True)
-    print(f'### nbdev_readme finshed ###')
+    print(f'### nbdev_readme finished ###')
 
 # %% ../nbs/91_Nbdev.ipynb 7
 def gacp(
@@ -30,7 +30,8 @@ def gacp(
     subprocess.run(["git", "add", "."])
     print(f'### git added ###')
     status = subprocess.check_output(["git", "status", "-s"])
-    subprocess.run(["git", "commit", "-m", status])
+    print(f'### git status: "{status}" ###')
+    subprocess.run(["git", "commit", "-m", f'"{status}"'])
     print(f'### git commited ###')
     subprocess.run(["git", "push"])
     print(f'### git pushed ###')
