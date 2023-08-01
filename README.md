@@ -10,23 +10,6 @@
 nbdev_prepare
 ```
 
-``` python
-!pip list | grep nbdev
-```
-
-    nbdev                         2.3.12
-
-``` python
-from nbdev.export import *
-from nbdev.test import *
-```
-
-``` python
-??nbdev
-```
-
-    Object `nbdev` not found.
-
 - Git stuff
 
 ``` sh
