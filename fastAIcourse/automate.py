@@ -51,4 +51,4 @@ def h():
 # %% ../nbs/91_Nbdev.ipynb 10
 def reinstall():
     import subprocess
-    subprocess.run(["pip", "install", "-e", "'.[dev]'"])
+    subprocess.run(["pip", "install", "-e", "."])
