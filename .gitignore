@@ -169,4 +169,7 @@ _proc/bears/
 nbs/Data/
 _proc/Data/
 
+nbs/outputs/
+_proc/outputs/
+
 *.pkl
