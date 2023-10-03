@@ -172,4 +172,14 @@ _proc/Data/
 nbs/outputs/
 _proc/outputs/
 
+nbs/paddy-disease-classification/
+_proc/paddy-disease-classification/
+
+
+
+
+
 *.pkl
+
+
+*.zip
