@@ -175,9 +175,10 @@ _proc/outputs/
 nbs/paddy-disease-classification/
 _proc/paddy-disease-classification/
 
+nbs/models/
+_proc/models/
 
-
-
+*.csv
 
 *.pkl
 

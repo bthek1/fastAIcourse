@@ -27,3 +27,21 @@ pip install fastAIcourse
 ``` sh
 pip install -e '.[dev]'
 ```
+
+## Structure
+
+1.  Data process
+    - Normalise
+    - Remove NAN
+2.  Create Model
+    - try decision tree - random forest
+3.  Run model
+
+## Model structure
+
+1.  train/test split
+    - asd
+2.  initalise random weights
+3.  calculate loss
+4.  Gradient descent - recalculate weights
+5.  Repeat steps 2 - 4
