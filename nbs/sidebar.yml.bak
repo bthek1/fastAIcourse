@@ -1,9 +1,0 @@
-website:
-  sidebar:
-    contents:
-      - index.ipynb
-      - 00_Intro.ipynb
-      - 01_Deployment.ipynb
-      - 02_NeuralNet.ipynb
-      - 03_NaturalLanguage.ipynb
-      - 04_Model.ipynb
