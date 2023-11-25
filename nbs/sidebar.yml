@@ -4,7 +4,6 @@ website:
       - index.ipynb
       - 000_Intro.ipynb
       - 010_Deployment.ipynb
-      - 011_test.ipynb
       - 020_NeuralNet.ipynb
       - 021_how-does-a-neural-net-really-work.ipynb
       - 030_NaturalLanguage.ipynb
@@ -19,4 +18,5 @@ website:
       - 110_Stable_Diffusion_overview.ipynb
       - 111_Stable_Diffusion.ipynb
       - 112_Stable Diffusion Deep Dive.ipynb
-      - 120_matrix.ipynb
+      - 120_Matrix.ipynb
+      - 130_Backpropagation.ipynb
