@@ -20,3 +20,4 @@ website:
       - 112_Stable Diffusion Deep Dive.ipynb
       - 120_Matrix.ipynb
       - 130_Backpropagation.ipynb
+      - 140_minibatch_training.ipynb

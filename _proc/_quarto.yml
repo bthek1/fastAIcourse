@@ -3,14 +3,16 @@ project:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly
+      dark: darkly
     css: styles.css
     toc: true
-
+    
 website:
   title: "Fast AI Course"
-  image: "macaw.jpg"
-  favicon: "macaw.jpg"
+  image: "bird.jpg"
+  favicon: "bird.jpg"
   reader-mode: true
   back-to-top-navigation: true
   page-navigation: true
@@ -23,7 +25,7 @@ website:
 
   navbar:
     background: dark
-    logo: "macaw.jpg"
+    logo: "bird.jpg"
     logo-alt: "Quarto logo."
     collapse-below: lg
     title: false
@@ -51,10 +53,12 @@ website:
         menu:
         - text: "Documentation"
           href: https://bthek1.github.io/webdevelopment_doc/
-        - text: "React"
-          href: https://bthek1.github.io/webdevelopment_doc/React/react.html
-        - text: "Django"
-          href: https://bthek1.github.io/webdevelopment_doc/django.html
+          
+      - text: "Nbdev Automation"
+        menu:
+        - text: "Automation lib"
+          href: https://bthek1.github.io/nbdevAuto/
+          
       - text: "Help"
         menu:
           - text: "Report a Bug"
@@ -99,7 +103,7 @@ website:
   comments: 
     utterances:
       repo: quarto-dev/quarto-web
-      
+        
   sidebar:
     style: floating
 
