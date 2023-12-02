@@ -10,7 +10,7 @@ format:
     toc: true
     
 website:
-  title: "Fast AI Course"
+  title: "ML Tools"
   image: "bird.jpg"
   favicon: "bird.jpg"
   reader-mode: true
@@ -43,6 +43,8 @@ website:
         menu:
         - text: "Machine Learning course"
           href: https://bthek1.github.io/ML/
+        - text: "Machine Learning Libraries"
+          href: https://bthek1.github.io/MLtools/
           
       - text: "Timeseries"    
         menu:
