@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/Backpropagation.html</loc>
-    <lastmod>2024-01-02T06:06:27.499Z</lastmod>
+    <lastmod>2024-01-02T08:29:19.049Z</lastmod>
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/multi-target.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/minibatch_training.html</loc>
-    <lastmod>2024-01-02T06:08:36.159Z</lastmod>
+    <lastmod>2024-01-02T08:24:56.269Z</lastmod>
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/stable_diffusion_overview.html</loc>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/Matrix and tensor.html</loc>
-    <lastmod>2024-01-02T05:49:43.969Z</lastmod>
+    <lastmod>2024-01-02T08:28:38.409Z</lastmod>
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/kaggle_tut.html</loc>
@@ -70,7 +70,7 @@
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/tabular.html</loc>
-    <lastmod>2024-01-02T08:00:27.259Z</lastmod>
+    <lastmod>2024-01-02T08:07:04.689Z</lastmod>
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/intro.html</loc>
@@ -79,5 +79,9 @@
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/linear-model-and-neural-net-from-scratch.html</loc>
     <lastmod>2024-01-02T06:06:34.059Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/matrix.html</loc>
+    <lastmod>2024-01-02T08:30:28.129Z</lastmod>
   </url>
 </urlset>
