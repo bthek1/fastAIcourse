@@ -109,13 +109,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="fastAIcourse - Collaborative Filtering">
 <meta property="og:description" content="Collaborative Filtering">
-<meta property="og:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/a82f3423-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
+<meta property="og:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/a9ed7638-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
 <meta property="og:site-name" content="fastAIcourse">
 <meta property="og:image:height" content="737">
 <meta property="og:image:width" content="1265">
 <meta name="twitter:title" content="fastAIcourse - Collaborative Filtering">
 <meta name="twitter:description" content="Collaborative Filtering">
-<meta name="twitter:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/a82f3423-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
+<meta name="twitter:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/a9ed7638-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
 <meta name="twitter:image-height" content="737">
 <meta name="twitter:image-width" content="1265">
 <meta name="twitter:card" content="summary_large_image">
@@ -455,7 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="a-first-look-at-the-data">A First Look at the Data</h2>
 <p>We do not have access to Netflix’s entire dataset of movie watching history, but there is a great dataset that we can use, called <a href="https://grouplens.org/datasets/movielens/">MovieLens</a>. This dataset contains tens of millions of movie rankings (a combination of a movie ID, a user ID, and a numeric rating), although we will just use a subset of 100,000 of them for our example. If you’re interested, it would be a great learning project to try and replicate this approach on the full 25-million recommendation dataset, which you can get from their website.</p>
 <p>The dataset is available through the usual fastai function:</p>
-<div class="cell" data-execution_count="2">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.ML_100k)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -484,16 +484,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     
 </div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display">
 <pre><code>Path('/home/ben/.fastai/data/ml-100k')</code></pre>
 </div>
 </div>
 <p>According to the <em>README</em>, the main table is in the file <em>u.data</em>. It is tab-separated and the columns are, respectively user, movie, rating, and timestamp. Since those names are not encoded, we need to indicate them when reading the file with Pandas. Here is a way to open this table and take a look:</p>
-<div class="cell" data-execution_count="3">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> pd.read_csv(path<span class="op">/</span><span class="st">'u.data'</span>, delimiter<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>, header<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      names<span class="op">=</span>[<span class="st">'user'</span>,<span class="st">'movie'</span>,<span class="st">'rating'</span>,<span class="st">'timestamp'</span>])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ratings.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -552,27 +552,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Although this has all the information we need, it is not a particularly helpful way for humans to look at this data. Here is the same data cross-tabulated into a human-friendly table:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/a82f3423-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png" class="img-fluid figure-img"></p>
+<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/a9ed7638-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">image.png</figcaption>
 </figure>
 </div>
 <p>We have selected just a few of the most popular movies, and users who watch the most movies, for this crosstab example. The empty cells in this table are the things that we would like our model to learn to fill in. Those are the places where a user has not reviewed the movie yet, presumably because they have not watched it. For each user, we would like to figure out which of those movies they might be most likely to enjoy.</p>
 <p>If we knew for each user to what degree they liked each important category that a movie might fall into, such as genre, age, preferred directors and actors, and so forth, and we knew the same information about each movie, then a simple way to fill in this table would be to multiply this information together for each movie and use a combination. For instance, assuming these factors range between -1 and +1, with positive numbers indicating stronger matches and negative numbers weaker ones, and the categories are science-fiction, action, and old movies, then we could represent the movie <em>The Last Skywalker</em> as:</p>
-<div class="cell" data-execution_count="4">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>last_skywalker <span class="op">=</span> np.array([<span class="fl">0.98</span>,<span class="fl">0.9</span>,<span class="op">-</span><span class="fl">0.9</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>last_skywalker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display">
 <pre><code>array([ 0.98,  0.9 , -0.9 ])</code></pre>
 </div>
 </div>
 <p>Here, for instance, we are scoring <em>very science-fiction</em> as 0.98, <em>very action</em> as 0.9, and <em>very not old</em> as -0.9. We could represent a user who likes modern sci-fi action movies as:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>user1 <span class="op">=</span> np.array([<span class="fl">0.9</span>,<span class="fl">0.8</span>,<span class="op">-</span><span class="fl">0.6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and we can now calculate the match between this combination:</p>
-<div class="cell" data-execution_count="6">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(user1<span class="op">*</span>last_skywalker).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display">
 <pre><code>2.1420000000000003</code></pre>
 </div>
 </div>
@@ -581,13 +581,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>jargon: dot product: The mathematical operation of multiplying the elements of two vectors together, and then summing up the result.</p>
 </blockquote>
 <p>On the other hand, we might represent the movie <em>Casablanca</em> as:</p>
-<div class="cell" data-execution_count="7">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>casablanca <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">0.99</span>,<span class="op">-</span><span class="fl">0.3</span>,<span class="fl">0.8</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The match between this combination is:</p>
-<div class="cell" data-execution_count="8">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(user1<span class="op">*</span>casablanca).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display">
 <pre><code>-1.611</code></pre>
 </div>
 </div>
@@ -599,7 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Step 1 of this approach is to randomly initialize some parameters. These parameters will be a set of latent factors for each user and movie. We will have to decide how many to use. We will discuss how to select this shortly, but for illustrative purposes let’s use 5 for now. Because each user will have a set of these factors and each movie will have a set of these factors, we can show these randomly initialized values right next to the users and movies in our crosstab, and we can then fill in the dot products for each of these combinations in the middle. For example, this is what it looks like in Microsoft Excel, with the top-left cell formula displayed as an example:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/d2e2811f-1-dd6a4c5e-c820-4b32-a621-eb2d300be4da.png" class="img-fluid figure-img"></p>
+<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/47c4f866-1-dd6a4c5e-c820-4b32-a621-eb2d300be4da.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">image.png</figcaption>
 </figure>
 </div>
@@ -611,11 +611,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-the-dataloaders" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-dataloaders">Creating the DataLoaders</h2>
 <p>When showing the data, we would rather see movie titles than their IDs. The table <code>u.item</code> contains the correspondence of IDs to titles:</p>
-<div class="cell" data-execution_count="9">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>movies <span class="op">=</span> pd.read_csv(path<span class="op">/</span><span class="st">'u.item'</span>,  delimiter<span class="op">=</span><span class="st">'|'</span>, encoding<span class="op">=</span><span class="st">'latin-1'</span>,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                     usecols<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>), names<span class="op">=</span>(<span class="st">'movie'</span>,<span class="st">'title'</span>), header<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>movies.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -660,10 +660,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can merge this with our <code>ratings</code> table to get the user ratings by title:</p>
-<div class="cell" data-execution_count="10">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> ratings.merge(movies)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ratings.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -726,7 +726,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can then build a <code>DataLoaders</code> object from this table. By default, it takes the first column for the user, the second column for the item (here our movies), and the third column for the ratings. We need to change the value of <code>item_name</code> in our case to use the titles instead of the IDs:</p>
-<div class="cell" data-execution_count="11">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> CollabDataLoaders.from_df(ratings, item_name<span class="op">=</span><span class="st">'title'</span>, bs<span class="op">=</span><span class="dv">64</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -805,7 +805,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>To represent collaborative filtering in PyTorch we can’t just use the crosstab representation directly, especially if we want it to fit into our deep learning framework. We can represent our movie and user latent factor tables as simple matrices:</p>
-<div class="cell" data-execution_count="12">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n_users  <span class="op">=</span> <span class="bu">len</span>(dls.classes[<span class="st">'user'</span>])</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'users : </span><span class="sc">{</span>n_users<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>n_movies <span class="op">=</span> <span class="bu">len</span>(dls.classes[<span class="st">'title'</span>])</span>
@@ -821,20 +821,20 @@ n_movies : 1665</code></pre>
 </div>
 <p>To calculate the result for a particular movie and user combination, we have to look up the index of the movie in our movie latent factor matrix and the index of the user in our user latent factor matrix; then we can do our dot product between the two latent factor vectors. But <em>look up in an index</em> is not an operation our deep learning models know how to do. They know how to do matrix products, and activation functions.</p>
 <p>Fortunately, it turns out that we can represent <em>look up in an index</em> as a matrix product. The trick is to replace our indices with one-hot-encoded vectors. Here is an example of what happens if we multiply a vector by a one-hot-encoded vector representing the index 3:</p>
-<div class="cell" data-execution_count="13">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>one_hot_3 <span class="op">=</span> one_hot(<span class="dv">3</span>, n_users).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>user_factors.t() <span class="op">@</span> one_hot_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display">
 <pre><code>tensor([-1.2604, -1.3016, -0.3323, -0.1222,  0.7545,  0.5075, -0.9962,  0.5073,
         -1.1468, -0.6767])</code></pre>
 </div>
 </div>
 <p>It gives us the same vector as the one at index 3 in the matrix:</p>
-<div class="cell" data-execution_count="15">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>user_factors[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display">
 <pre><code>tensor([-1.2604, -1.3016, -0.3323, -0.1222,  0.7545,  0.5075, -0.9962,  0.5073,
         -1.1468, -0.6767])</code></pre>
 </div>
@@ -854,22 +854,22 @@ n_movies : 1665</code></pre>
 <h2 class="anchored" data-anchor-id="collaborative-filtering-from-scratch">Collaborative Filtering from Scratch</h2>
 <p>Before we can write a model in PyTorch, we first need to learn the basics of object-oriented programming and Python. If you haven’t done any object-oriented programming before, we will give you a quick introduction here, but we would recommend looking up a tutorial and getting some practice before moving on.</p>
 <p>The key idea in object-oriented programming is the <em>class</em>. We have been using classes throughout this book, such as <code>DataLoader</code>, <code>string</code>, and <code>Learner</code>. Python also makes it easy for us to create new classes. Here is an example of a simple class:</p>
-<div class="cell" data-execution_count="16">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Example:</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, a): <span class="va">self</span>.a <span class="op">=</span> a</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> say(<span class="va">self</span>,x): <span class="cf">return</span> <span class="ss">f'Hello </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>a<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">.'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The most important piece of this is the special method called <code>__init__</code> (pronounced <em>dunder init</em>). In Python, any method surrounded in double underscores like this is considered special. It indicates that there is some extra behavior associated with this method name. In the case of <code>__init__</code>, this is the method Python will call when your new object is created. So, this is where you can set up any state that needs to be initialized upon object creation. Any parameters included when the user constructs an instance of your class will be passed to the <code>__init__</code> method as parameters. Note that the first parameter to any method defined inside a class is <code>self</code>, so you can use this to set and get any attributes that you will need:</p>
-<div class="cell" data-execution_count="17">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ex <span class="op">=</span> Example(<span class="st">'Sylvain'</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ex.say(<span class="st">'nice to meet you'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display">
 <pre><code>'Hello Sylvain, nice to meet you.'</code></pre>
 </div>
 </div>
 <p>Also note that creating a new PyTorch module requires inheriting from <code>Module</code>. <em>Inheritance</em> is an important object-oriented concept that we will not discuss in detail here—in short, it means that we can add additional behavior to an existing class. PyTorch already provides a <code>Module</code> class, which provides some basic foundations that we want to build on. So, we add the name of this <em>superclass</em> after the name of the class that we are defining, as shown in the following example.</p>
 <p>The final thing that you need to know to create a new PyTorch module is that when your module is called, PyTorch will call a method in your class called <code>forward</code>, and will pass along to that any parameters that are included in the call. Here is the class defining our dot product model:</p>
-<div class="cell" data-execution_count="18">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>?Embedding</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
@@ -882,7 +882,7 @@ n_movies : 1665</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="19">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DotProduct(Module):</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_movies, n_factors):</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_factors <span class="op">=</span> Embedding(n_users, n_factors)</span>
@@ -895,20 +895,20 @@ n_movies : 1665</code></pre>
 </div>
 <p>If you haven’t seen object-oriented programming before, then don’t worry, you won’t need to use it much in this book. We are just mentioning this approach here, because most online tutorials and documentation will use the object-oriented syntax.</p>
 <p>Note that the input of the model is a tensor of shape <code>batch_size x 2</code>, where the first column (<code>x[:, 0]</code>) contains the user IDs and the second column (<code>x[:, 1]</code>) contains the movie IDs. As explained before, we use the <em>embedding</em> layers to represent our matrices of user and movie latent factors:</p>
-<div class="cell" data-execution_count="20">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> dls.one_batch()</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>x.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display">
 <pre><code>torch.Size([64, 2])</code></pre>
 </div>
 </div>
 <p>Now that we have defined our architecture, and created our parameter matrices, we need to create a <code>Learner</code> to optimize our model. In the past we have used special functions, such as <code>cnn_learner</code>, which set up everything for us for a particular application. Since we are doing things from scratch here, we will use the plain <code>Learner</code> class:</p>
-<div class="cell" data-execution_count="21">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DotProduct(n_users, n_movies, <span class="dv">50</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are now ready to fit our model:</p>
-<div class="cell" data-execution_count="22">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -974,7 +974,7 @@ n_movies : 1665</code></pre>
 </div>
 </div>
 <p>The first thing we can do to make this model a little bit better is to force those predictions to be between 0 and 5. For this, we just need to use <code>sigmoid_range</code>, like in &lt;<chapter_multicat>&gt;. One thing we discovered empirically is that it’s better to have the range go a little bit over 5, so we use <code>(0, 5.5)</code>:</chapter_multicat></p>
-<div class="cell" data-execution_count="23">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DotProduct(Module):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_movies, n_factors, y_range<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">5.5</span>)):</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_factors <span class="op">=</span> Embedding(n_users, n_factors)</span>
@@ -986,7 +986,7 @@ n_movies : 1665</code></pre>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        movies <span class="op">=</span> <span class="va">self</span>.movie_factors(x[:,<span class="dv">1</span>])</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sigmoid_range((users <span class="op">*</span> movies).<span class="bu">sum</span>(dim<span class="op">=</span><span class="dv">1</span>), <span class="op">*</span><span class="va">self</span>.y_range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="24">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DotProduct(n_users, n_movies, <span class="dv">50</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1055,7 +1055,7 @@ n_movies : 1665</code></pre>
 </div>
 <p>This is a reasonable start, but we can do better. One obvious missing piece is that some users are just more positive or negative in their recommendations than others, and some movies are just plain better or worse than others. But in our dot product representation we do not have any way to encode either of these things. If all you can say about a movie is, for instance, that it is very sci-fi, very action-oriented, and very not old, then you don’t really have any way to say whether most people like it.</p>
 <p>That’s because at this point we only have weights; we do not have biases. If we have a single number for each user that we can add to our scores, and ditto for each movie, that will handle this missing piece very nicely. So first of all, let’s adjust our model architecture:</p>
-<div class="cell" data-execution_count="25">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DotProductBias(Module):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_movies, n_factors, y_range<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">5.5</span>)):</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_factors <span class="op">=</span> Embedding(n_users, n_factors)</span>
@@ -1072,7 +1072,7 @@ n_movies : 1665</code></pre>
 <span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sigmoid_range(res, <span class="op">*</span><span class="va">self</span>.y_range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s try training this and see how it goes:</p>
-<div class="cell" data-execution_count="26">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DotProductBias(n_users, n_movies, <span class="dv">50</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1144,7 +1144,7 @@ n_movies : 1665</code></pre>
 <h3 class="anchored" data-anchor-id="weight-decay">Weight Decay</h3>
 <p>Weight decay, or <em>L2 regularization</em>, consists in adding to your loss function the sum of all the weights squared. Why do that? Because when we compute the gradients, it will add a contribution to them that will encourage the weights to be as small as possible.</p>
 <p>Why would it prevent overfitting? The idea is that the larger the coefficients are, the sharper canyons we will have in the loss function. If we take the basic example of a parabola, <code>y = a * (x**2)</code>, the larger <code>a</code> is, the more <em>narrow</em> the parabola is:</p>
-<div class="cell" data-hide_input="true" data-execution_count="27">
+<div class="cell" data-hide_input="true">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">100</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>a_s <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">50</span>] </span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>ys <span class="op">=</span> [a <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> a <span class="kw">in</span> a_s]</span>
@@ -1162,7 +1162,7 @@ n_movies : 1665</code></pre>
 <p>In practice, though, it would be very inefficient (and maybe numerically unstable) to compute that big sum and add it to the loss. If you remember a little bit of high school math, you might recall that the derivative of <code>p**2</code> with respect to <code>p</code> is <code>2*p</code>, so adding that big sum to our loss is exactly the same as doing:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>parameters.grad <span class="op">+=</span> wd <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In practice, since <code>wd</code> is a parameter that we choose, we can just make it twice as big, so we don’t even need the <code>*2</code> in this equation. To use weight decay in fastai, just pass <code>wd</code> in your call to <code>fit</code> or <code>fit_one_cycle</code>:</p>
-<div class="cell" data-execution_count="28">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DotProductBias(n_users, n_movies, <span class="dv">50</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>, wd<span class="op">=</span><span class="fl">0.01</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1234,53 +1234,53 @@ n_movies : 1665</code></pre>
 <section id="creating-our-own-embedding-module" class="level3">
 <h3 class="anchored" data-anchor-id="creating-our-own-embedding-module">Creating Our Own Embedding Module</h3>
 <p>So far, we’ve used <code>Embedding</code> without thinking about how it really works. Let’s re-create <code>DotProductBias</code> <em>without</em> using this class. We’ll need a randomly initialized weight matrix for each of the embeddings. We have to be careful, however. Recall from &lt;<chapter_mnist_basics>&gt; that optimizers require that they can get all the parameters of a module from the module’s <code>parameters</code> method. However, this does not happen fully automatically. If we just add a tensor as an attribute to a <code>Module</code>, it will not be included in <code>parameters</code>:</chapter_mnist_basics></p>
-<div class="cell" data-execution_count="29">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> T(Module):</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>): <span class="va">self</span>.a <span class="op">=</span> torch.ones(<span class="dv">3</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>L(T().parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell-output cell-output-display">
 <pre><code>(#0) []</code></pre>
 </div>
 </div>
 <p>To tell <code>Module</code> that we want to treat a tensor as a parameter, we have to wrap it in the <code>nn.Parameter</code> class. This class doesn’t actually add any functionality (other than automatically calling <code>requires_grad_</code> for us). It’s only used as a “marker” to show what to include in <code>parameters</code>:</p>
-<div class="cell" data-execution_count="30">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> T(Module):</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>): <span class="va">self</span>.a <span class="op">=</span> nn.Parameter(torch.ones(<span class="dv">3</span>))</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>L(T().parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display">
 <pre><code>(#1) [Parameter containing:
 tensor([1., 1., 1.], requires_grad=True)]</code></pre>
 </div>
 </div>
 <p>All PyTorch modules use <code>nn.Parameter</code> for any trainable parameters, which is why we haven’t needed to explicitly use this wrapper up until now:</p>
-<div class="cell" data-execution_count="31">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> T(Module):</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>): <span class="va">self</span>.a <span class="op">=</span> nn.Linear(<span class="dv">1</span>, <span class="dv">3</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> T()</span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>L(t.parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display">
 <pre><code>(#1) [Parameter containing:
 tensor([[ 0.2356],
         [-0.5954],
         [-0.3385]], requires_grad=True)]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="32">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(t.a.weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display">
 <pre><code>torch.nn.parameter.Parameter</code></pre>
 </div>
 </div>
 <p>We can create a tensor as a parameter, with random initialization, like so:</p>
-<div class="cell" data-execution_count="33">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_params(size):</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> nn.Parameter(torch.zeros(<span class="op">*</span>size).normal_(<span class="dv">0</span>, <span class="fl">0.01</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s use this to create <code>DotProductBias</code> again, but without <code>Embedding</code>:</p>
-<div class="cell" data-execution_count="34">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DotProductBias(Module):</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_movies, n_factors, y_range<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">5.5</span>)):</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_factors <span class="op">=</span> create_params([n_users, n_factors])</span>
@@ -1297,7 +1297,7 @@ tensor([[ 0.2356],
 <span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sigmoid_range(res, <span class="op">*</span><span class="va">self</span>.y_range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then let’s train it again to check we get around the same results we saw in the previous section:</p>
-<div class="cell" data-execution_count="35">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DotProductBias(n_users, n_movies, <span class="dv">50</span>)</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>, wd<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1370,11 +1370,11 @@ tensor([[ 0.2356],
 <section id="interpreting-embeddings-and-biases" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-embeddings-and-biases">Interpreting Embeddings and Biases</h2>
 <p>Our model is already useful, in that it can provide us with movie recommendations for our users—but it is also interesting to see what parameters it has discovered. The easiest to interpret are the biases. Here are the movies with the lowest values in the bias vector:</p>
-<div class="cell" data-execution_count="36">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>movie_bias <span class="op">=</span> learn.model.movie_bias.squeeze()</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>idxs <span class="op">=</span> movie_bias.argsort()[:<span class="dv">5</span>]</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>[dls.classes[<span class="st">'title'</span>][i] <span class="cf">for</span> i <span class="kw">in</span> idxs]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display">
 <pre><code>['Robocop 3 (1993)',
  'Children of the Corn: The Gathering (1996)',
  'Lawnmower Man 2: Beyond Cyberspace (1996)',
@@ -1383,10 +1383,10 @@ tensor([[ 0.2356],
 </div>
 </div>
 <p>Think about what this means. What it’s saying is that for each of these movies, even when a user is very well matched to its latent factors (which, as we will see in a moment, tend to represent things like level of action, age of movie, and so forth), they still generally don’t like it. We could have simply sorted the movies directly by their average rating, but looking at the learned bias tells us something much more interesting. It tells us not just whether a movie is of a kind that people tend not to enjoy watching, but that people tend not to like watching it even if it is of a kind that they would otherwise enjoy! By the same token, here are the movies with the highest bias:</p>
-<div class="cell" data-execution_count="37">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>idxs <span class="op">=</span> movie_bias.argsort(descending<span class="op">=</span><span class="va">True</span>)[:<span class="dv">5</span>]</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>[dls.classes[<span class="st">'title'</span>][i] <span class="cf">for</span> i <span class="kw">in</span> idxs]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display">
 <pre><code>['Titanic (1997)',
  'Shawshank Redemption, The (1994)',
  'Silence of the Lambs, The (1991)',
@@ -1396,7 +1396,7 @@ tensor([[ 0.2356],
 </div>
 <p>So, for instance, even if you don’t normally enjoy detective movies, you might enjoy <em>LA Confidential</em>!</p>
 <p>It is not quite so easy to directly interpret the embedding matrices. There are just too many factors for a human to look at. But there is a technique that can pull out the most important underlying <em>directions</em> in such a matrix, called <em>principal component analysis</em> (PCA). We will not be going into this in detail in this book, because it is not particularly important for you to understand to be a deep learning practitioner, but if you are interested then we suggest you check out the fast.ai course <a href="https://github.com/fastai/numerical-linear-algebra">Computational Linear Algebra for Coders</a>. Here’s what our movies look like based on two of the strongest PCA components.</p>
-<div class="cell" data-hide_input="true" data-execution_count="38">
+<div class="cell" data-hide_input="true">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> ratings.groupby(<span class="st">'title'</span>)[<span class="st">'rating'</span>].count()</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>top_movies <span class="op">=</span> g.sort_values(ascending<span class="op">=</span><span class="va">False</span>).index.values[:<span class="dv">1000</span>]</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>top_idxs <span class="op">=</span> tensor([learn.dls.classes[<span class="st">'title'</span>].o2i[m] <span class="cf">for</span> m <span class="kw">in</span> top_movies])</span>
@@ -1423,10 +1423,10 @@ tensor([[ 0.2356],
 <section id="using-fastai.collab" class="level3">
 <h3 class="anchored" data-anchor-id="using-fastai.collab">Using fastai.collab</h3>
 <p>We can create and train a collaborative filtering model using the exact structure shown earlier by using fastai’s <code>collab_learner</code>:</p>
-<div class="cell" data-execution_count="39">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> collab_learner(dls, n_factors<span class="op">=</span><span class="dv">50</span>, y_range<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">5.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="40">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>, wd<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -1492,9 +1492,9 @@ tensor([[ 0.2356],
 </div>
 </div>
 <p>The names of the layers can be seen by printing the model:</p>
-<div class="cell" data-execution_count="41">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>learn.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div class="cell-output cell-output-display">
 <pre><code>EmbeddingDotBias(
   (u_weight): Embedding(944, 50)
   (i_weight): Embedding(1665, 50)
@@ -1504,11 +1504,11 @@ tensor([[ 0.2356],
 </div>
 </div>
 <p>We can use these to replicate any of the analyses we did in the previous section—for instance:</p>
-<div class="cell" data-execution_count="42">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>movie_bias <span class="op">=</span> learn.model.i_bias.weight.squeeze()</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>idxs <span class="op">=</span> movie_bias.argsort(descending<span class="op">=</span><span class="va">True</span>)[:<span class="dv">5</span>]</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>[dls.classes[<span class="st">'title'</span>][i] <span class="cf">for</span> i <span class="kw">in</span> idxs]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display">
 <pre><code>['L.A. Confidential (1997)',
  'Titanic (1997)',
  'Shawshank Redemption, The (1994)',
@@ -1522,13 +1522,13 @@ tensor([[ 0.2356],
 <h3 class="anchored" data-anchor-id="embedding-distance">Embedding Distance</h3>
 <p>On a two-dimensional map we can calculate the distance between two coordinates using the formula of Pythagoras: <span class="math inline">\(\sqrt{x^{2}+y^{2}}\)</span> (assuming that <em>x</em> and <em>y</em> are the distances between the coordinates on each axis). For a 50-dimensional embedding we can do exactly the same thing, except that we add up the squares of all 50 of the coordinate distances.</p>
 <p>If there were two movies that were nearly identical, then their embedding vectors would also have to be nearly identical, because the users that would like them would be nearly exactly the same. There is a more general idea here: movie similarity can be defined by the similarity of users that like those movies. And that directly means that the distance between two movies’ embedding vectors can define that similarity. We can use this to find the most similar movie to <em>Silence of the Lambs</em>:</p>
-<div class="cell" data-execution_count="43">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>movie_factors <span class="op">=</span> learn.model.i_weight.weight</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> dls.classes[<span class="st">'title'</span>].o2i[<span class="st">'Silence of the Lambs, The (1991)'</span>]</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> nn.CosineSimilarity(dim<span class="op">=</span><span class="dv">1</span>)(movie_factors, movie_factors[idx][<span class="va">None</span>])</span>
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> distances.argsort(descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">1</span>]</span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>dls.classes[<span class="st">'title'</span>][idx]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display">
 <pre><code>'Before the Rain (Pred dozhdot) (1994)'</code></pre>
 </div>
 </div>
@@ -1549,15 +1549,15 @@ tensor([[ 0.2356],
 <h2 class="anchored" data-anchor-id="deep-learning-for-collaborative-filtering">Deep Learning for Collaborative Filtering</h2>
 <p>To turn our architecture into a deep learning model, the first step is to take the results of the embedding lookup and concatenate those activations together. This gives us a matrix which we can then pass through linear layers and nonlinearities in the usual way.</p>
 <p>Since we’ll be concatenating the embeddings, rather than taking their dot product, the two embedding matrices can have different sizes (i.e., different numbers of latent factors). fastai has a function <code>get_emb_sz</code> that returns recommended sizes for embedding matrices for your data, based on a heuristic that fast.ai has found tends to work well in practice:</p>
-<div class="cell" data-execution_count="44">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>embs <span class="op">=</span> get_emb_sz(dls)</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>embs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display">
 <pre><code>[(944, 74), (1665, 102)]</code></pre>
 </div>
 </div>
 <p>Let’s implement this class:</p>
-<div class="cell" data-execution_count="45">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CollabNN(Module):</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, user_sz, item_sz, y_range<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">5.5</span>), n_act<span class="op">=</span><span class="dv">100</span>):</span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_factors <span class="op">=</span> Embedding(<span class="op">*</span>user_sz)</span>
@@ -1574,12 +1574,12 @@ tensor([[ 0.2356],
 <span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sigmoid_range(x, <span class="op">*</span><span class="va">self</span>.y_range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And use it to create a model:</p>
-<div class="cell" data-execution_count="46">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> CollabNN(<span class="op">*</span>embs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>CollabNN</code> creates our <code>Embedding</code> layers in the same way as previous classes in this chapter, except that we now use the <code>embs</code> sizes. <code>self.layers</code> is identical to the mini-neural net we created in &lt;<chapter_mnist_basics>&gt; for MNIST. Then, in <code>forward</code>, we apply the embeddings, concatenate the results, and pass this through the mini-neural net. Finally, we apply <code>sigmoid_range</code> as we have in previous models.</chapter_mnist_basics></p>
 <p>Let’s see if it trains:</p>
-<div class="cell" data-execution_count="47">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>, wd<span class="op">=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1646,7 +1646,7 @@ tensor([[ 0.2356],
 </div>
 </div>
 <p>fastai provides this model in <code>fastai.collab</code> if you pass <code>use_nn=True</code> in your call to <code>collab_learner</code> (including calling <code>get_emb_sz</code> for you), and it lets you easily create more layers. For instance, here we’re creating two hidden layers, of size 100 and 50, respectively:</p>
-<div class="cell" data-execution_count="48">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> collab_learner(dls, use_nn<span class="op">=</span><span class="va">True</span>, y_range<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">5.5</span>), layers<span class="op">=</span>[<span class="dv">100</span>,<span class="dv">50</span>])</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>, <span class="fl">5e-3</span>, wd<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1713,7 +1713,7 @@ tensor([[ 0.2356],
 </div>
 </div>
 <p><code>learn.model</code> is an object of type <code>EmbeddingNN</code>. Let’s take a look at fastai’s code for this class:</p>
-<div class="cell" data-execution_count="49">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(TabularModel)</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EmbeddingNN(TabularModel):</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, emb_szs, layers, <span class="op">**</span>kwargs):</span>
