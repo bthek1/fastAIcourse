@@ -39,4 +39,9 @@ d = { 'settings': { 'branch': 'main',
                                         'fastAIcourse.functions.verify_pics': ('functions.html#verify_pics', 'fastAIcourse/functions.py')},
             'fastAIcourse.intro': {},
             'fastAIcourse.neuralnet': { 'fastAIcourse.neuralnet.plot_function': ( 'how-does-a-neural-net-really-work.html#plot_function',
-                                                                                  'fastAIcourse/neuralnet.py')}}}
+                                                                                  'fastAIcourse/neuralnet.py')},
+            'fastAIcourse.training': { 'fastAIcourse.training.Model': ('minibatch_training.html#model', 'fastAIcourse/training.py'),
+                                       'fastAIcourse.training.Model.__call__': ( 'minibatch_training.html#model.__call__',
+                                                                                 'fastAIcourse/training.py'),
+                                       'fastAIcourse.training.Model.__init__': ( 'minibatch_training.html#model.__init__',
+                                                                                 'fastAIcourse/training.py')}}}
