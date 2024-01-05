@@ -3,6 +3,12 @@
 # %% auto 0
 __all__ = ['Model']
 
+# %% ../nbs/140_minibatch_training.ipynb 2
+import pickle,gzip,math,os,time,shutil,torch,matplotlib as mpl,numpy as np,matplotlib.pyplot as plt
+from pathlib import Path
+from torch import tensor,nn
+import torch.nn.functional as F
+
 # %% ../nbs/140_minibatch_training.ipynb 7
 class Model(nn.Module):
     def __init__(self, n_in, nh, n_out):
