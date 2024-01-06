@@ -99,7 +99,6 @@ def subplots(
 from nbdev.showdoc import show_doc
 
 # %% ../nbs/150_datasets.ipynb 47
-@fc.delegates(subplots)
 def get_grid(
     n:int, # Number of axes
     nrows:int=None, # Number of rows, defaulting to `int(math.sqrt(n))`
