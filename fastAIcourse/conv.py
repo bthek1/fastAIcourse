@@ -13,12 +13,12 @@ from typing import Mapping
 from .training import *
 from .datasets import *
 
-# %% ../nbs/170_convolutions.ipynb 74
+# %% ../nbs/170_convolutions.ipynb 72
 def conv(ni, nf, ks=3, stride=2, act=True):
     res = nn.Conv2d(ni, nf, stride=stride, kernel_size=ks, padding=ks//2)
     if act: res = nn.Sequential(res, nn.ReLU())
     return res
 
-# %% ../nbs/170_convolutions.ipynb 81
+# %% ../nbs/170_convolutions.ipynb 79
 def_device = 'mps' if torch.backends.mps.is_available() else 'cuda' if torch.cuda.is_available() else 'cpu'
 def_device
