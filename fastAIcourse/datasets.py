@@ -12,7 +12,8 @@ from torch.utils.data import default_collate
 from .training import *
 
 # %% auto 0
-__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict', 'show_image', 'subplots', 'DataLoaders']
+__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict', 'show_image', 'subplots', 'get_grid',
+           'DataLoaders']
 
 # %% ../nbs/150_datasets.ipynb 4
 import logging,pickle,gzip,os,time,shutil,torch,matplotlib as mpl
@@ -96,6 +97,28 @@ def subplots(
 
 # %% ../nbs/150_datasets.ipynb 43
 from nbdev.showdoc import show_doc
+
+# %% ../nbs/150_datasets.ipynb 47
+@fc.delegates(subplots)
+def get_grid(
+    n:int, # Number of axes
+    nrows:int=None, # Number of rows, defaulting to `int(math.sqrt(n))`
+    ncols:int=None, # Number of columns, defaulting to `ceil(n/rows)`
+    title:str=None, # If passed, title set to the figure
+    weight:str='bold', # Title font weight
+    size:int=14, # Title font size
+    **kwargs,
+): # fig and axs
+    "Return a grid of `n` axes, `rows` by `cols`"
+    if nrows: ncols = ncols or int(np.floor(n/nrows))
+    elif ncols: nrows = nrows or int(np.ceil(n/ncols))
+    else:
+        nrows = int(math.sqrt(n))
+        ncols = int(np.floor(n/nrows))
+    fig,axs = subplots(nrows, ncols, **kwargs)
+    for i in range(n, nrows*ncols): axs.flat[i].set_axis_off()
+    if title is not None: fig.suptitle(title, weight=weight, size=size)
+    return fig,axs
 
 # %% ../nbs/150_datasets.ipynb 53
 class DataLoaders:
