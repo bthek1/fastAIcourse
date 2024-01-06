@@ -12,7 +12,7 @@ from torch.utils.data import default_collate
 from .training import *
 
 # %% auto 0
-__all__ = ['collate_fn', 'transforms', 'inplace']
+__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict']
 
 # %% ../nbs/150_datasets.ipynb 4
 import logging,pickle,gzip,os,time,shutil,torch,matplotlib as mpl
@@ -44,6 +44,20 @@ def inplace(f):
     def _f(b):
         f(b)
         return b
+    return _f
+
+# %% ../nbs/150_datasets.ipynb 27
+@inplace
+def transformi(b): b[x] = [torch.flatten(TF.to_tensor(o)) for o in b[x]]
+
+# %% ../nbs/150_datasets.ipynb 30
+class D:
+    def __getitem__(self, k): return 1 if k=='a' else 2 if k=='b' else 3
+
+# %% ../nbs/150_datasets.ipynb 34
+def collate_dict(ds):
+    get = itemgetter(*ds.features)
+    def _f(b): return get(default_collate(b))
     return _f
 
 # %% ../nbs/150_datasets.ipynb 43
