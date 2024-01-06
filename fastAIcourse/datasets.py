@@ -12,7 +12,8 @@ from torch.utils.data import default_collate
 from .training import *
 
 # %% auto 0
-__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict', 'show_image', 'subplots']
+__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict', 'show_image', 'subplots', 'get_grid',
+           'show_images', 'DataLoaders']
 
 # %% ../nbs/150_datasets.ipynb 4
 import logging,pickle,gzip,os,time,shutil,torch,matplotlib as mpl
@@ -96,3 +97,45 @@ def subplots(
 
 # %% ../nbs/150_datasets.ipynb 43
 from nbdev.showdoc import show_doc
+
+# %% ../nbs/150_datasets.ipynb 46
+@fc.delegates(subplots)
+def get_grid(
+    n:int, # Number of axes
+    nrows:int=None, # Number of rows, defaulting to `int(math.sqrt(n))`
+    ncols:int=None, # Number of columns, defaulting to `ceil(n/rows)`
+    title:str=None, # If passed, title set to the figure
+    weight:str='bold', # Title font weight
+    size:int=14, # Title font size
+    **kwargs,
+): # fig and axs
+    "Return a grid of `n` axes, `rows` by `cols`"
+    if nrows: ncols = ncols or int(np.floor(n/nrows))
+    elif ncols: nrows = nrows or int(np.ceil(n/ncols))
+    else:
+        nrows = int(math.sqrt(n))
+        ncols = int(np.floor(n/nrows))
+    fig,axs = subplots(nrows, ncols, **kwargs)
+    for i in range(n, nrows*ncols): axs.flat[i].set_axis_off()
+    if title is not None: fig.suptitle(title, weight=weight, size=size)
+    return fig,axs
+
+# %% ../nbs/150_datasets.ipynb 48
+@fc.delegates(subplots)
+def show_images(ims:list, # Images to show
+                nrows:int|None=None, # Number of rows in grid
+                ncols:int|None=None, # Number of columns in grid (auto-calculated if None)
+                titles:list|None=None, # Optional list of titles for each image
+                **kwargs):
+    "Show all images `ims` as subplots with `rows` using `titles`"
+    axs = get_grid(len(ims), nrows, ncols, **kwargs)[1].flat
+    for im,t,ax in zip_longest(ims, titles or [], axs): show_image(im, ax=ax, title=t)
+
+# %% ../nbs/150_datasets.ipynb 52
+class DataLoaders:
+    def __init__(self, *dls): self.train,self.valid = dls[:2]
+
+    @classmethod
+    def from_dd(cls, dd, batch_size, as_tuple=True, **kwargs):
+        f = collate_dict(dd['train'])
+        return cls(*get_dls(*dd.values(), bs=batch_size, collate_fn=f, **kwargs))
