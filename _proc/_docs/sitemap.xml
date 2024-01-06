@@ -2,86 +2,94 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/stable_diffusion.html</loc>
-    <lastmod>2024-01-02T05:49:54.499Z</lastmod>
+    <lastmod>2024-01-06T08:07:51.164Z</lastmod>
   </url>
   <url>
-    <loc>https://bthek1.github.io/fastAIcourse/Backpropagation.html</loc>
-    <lastmod>2024-01-02T08:29:19.049Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/multi-target.html</loc>
-    <lastmod>2024-01-02T05:49:50.739Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/naturallanguage.html</loc>
-    <lastmod>2024-01-02T05:49:46.079Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/index.html</loc>
-    <lastmod>2024-01-02T05:49:44.489Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/lm-hackers.html</loc>
-    <lastmod>2024-01-02T06:08:44.709Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/deployment.html</loc>
-    <lastmod>2024-01-02T05:49:41.619Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/collaborative-filtering-deep-dive.html</loc>
-    <lastmod>2024-01-02T06:06:26.639Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/stable diffusion deep dive.html</loc>
-    <lastmod>2024-01-02T05:49:38.039Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/how-does-a-neural-net-really-work.html</loc>
-    <lastmod>2024-01-02T05:49:35.689Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/how-random-forests-really-work.html</loc>
-    <lastmod>2024-01-02T05:49:34.869Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/minibatch_training.html</loc>
-    <lastmod>2024-01-02T08:24:56.269Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/stable_diffusion_overview.html</loc>
-    <lastmod>2024-01-02T05:49:38.359Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/neuralnet.html</loc>
-    <lastmod>2024-01-02T05:49:41.099Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/why-you-should-use-a-framework.html</loc>
-    <lastmod>2024-01-02T05:49:42.299Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/Matrix and tensor.html</loc>
-    <lastmod>2024-01-02T08:28:38.409Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/kaggle_tut.html</loc>
-    <lastmod>2024-01-02T05:49:45.129Z</lastmod>
-  </url>
-  <url>
-    <loc>https://bthek1.github.io/fastAIcourse/tabular.html</loc>
-    <lastmod>2024-01-02T08:07:04.689Z</lastmod>
+    <loc>https://bthek1.github.io/fastAIcourse/backpropagation.html</loc>
+    <lastmod>2024-01-06T08:07:48.544Z</lastmod>
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/intro.html</loc>
-    <lastmod>2024-01-02T05:49:51.189Z</lastmod>
+    <lastmod>2024-01-06T08:07:47.204Z</lastmod>
   </url>
   <url>
-    <loc>https://bthek1.github.io/fastAIcourse/linear-model-and-neural-net-from-scratch.html</loc>
-    <lastmod>2024-01-02T06:06:34.059Z</lastmod>
+    <loc>https://bthek1.github.io/fastAIcourse/datasets.html</loc>
+    <lastmod>2024-01-06T08:07:46.174Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/naturallanguage.html</loc>
+    <lastmod>2024-01-06T08:07:41.394Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/index.html</loc>
+    <lastmod>2024-01-06T08:07:39.904Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/lm-hackers.html</loc>
+    <lastmod>2024-01-06T08:07:38.584Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/deployment.html</loc>
+    <lastmod>2024-01-06T08:07:37.284Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/collaborative-filtering-deep-dive.html</loc>
+    <lastmod>2024-01-06T08:07:36.164Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/foundations.html</loc>
+    <lastmod>2024-01-06T08:07:33.894Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/minibatch_training.html</loc>
+    <lastmod>2024-01-06T08:07:31.774Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/how-random-forests-really-work.html</loc>
+    <lastmod>2024-01-06T08:07:30.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/how-does-a-neural-net-really-work.html</loc>
+    <lastmod>2024-01-06T08:07:30.914Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/stable diffusion deep dive.html</loc>
+    <lastmod>2024-01-06T08:07:33.424Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/stable_diffusion_overview.html</loc>
+    <lastmod>2024-01-06T08:07:34.194Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/neuralnet.html</loc>
+    <lastmod>2024-01-06T08:07:36.764Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/why-you-should-use-a-framework.html</loc>
+    <lastmod>2024-01-06T08:07:37.904Z</lastmod>
   </url>
   <url>
     <loc>https://bthek1.github.io/fastAIcourse/matrix.html</loc>
-    <lastmod>2024-01-02T08:30:28.129Z</lastmod>
+    <lastmod>2024-01-06T08:07:39.384Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/kaggle_tut.html</loc>
+    <lastmod>2024-01-06T08:07:40.504Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/tabular.html</loc>
+    <lastmod>2024-01-06T08:07:45.214Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/multi-target.html</loc>
+    <lastmod>2024-01-06T08:07:46.784Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/convolutions.html</loc>
+    <lastmod>2024-01-06T08:07:48.124Z</lastmod>
+  </url>
+  <url>
+    <loc>https://bthek1.github.io/fastAIcourse/linear-model-and-neural-net-from-scratch.html</loc>
+    <lastmod>2024-01-06T08:07:49.854Z</lastmod>
   </url>
 </urlset>

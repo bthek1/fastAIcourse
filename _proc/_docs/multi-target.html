@@ -361,13 +361,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Matrix and tensor.html" class="sidebar-item-text sidebar-link">
+  <a href="./matrix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Matrix and tensor</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Backpropagation.html" class="sidebar-item-text sidebar-link">
+  <a href="./backpropagation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
   </div>
 </li>
@@ -375,6 +375,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./minibatch_training.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mini Batch</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hugging Face Datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./convolutions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Convolutions</span></a>
   </div>
 </li>
     </ul>
@@ -433,7 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This might sound like a bad idea. After all, doesn’t that mean that the model has <em>more</em> to do? Mightn’t it get rather distracted from its main task, which is to identify paddy disease?</p>
 <p>Perhaps… But in previous projects I’ve often found the opposite to be true, especially when training for quite a few epochs. By giving the model more signal about what is present in a picture, it may be able to use this information to find more interesting features that predict our target of interest. For instance, perhaps some of the features of disease change between varieties.</p>
 <section id="multi-output-dataloader" class="level2">
-<h2 class="anchored" data-anchor-id="multi-output-dataloader">Multi-output <code>DataLoader</code></h2>
+<h2 class="anchored" data-anchor-id="multi-output-dataloader">Multi-output <a href="https://bthek1.github.io/fastAIcourse/minibatch_training.html#dataloader"><code>DataLoader</code></a></h2>
 <p>First we’ll repeat the steps we used last time to access the data and ensure all the latest libraries are installed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nbdevAuto.functions <span class="im">import</span> kaggle_competition_download</span>
@@ -526,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_variety(p): <span class="cf">return</span> df.loc[p.name, <span class="st">'variety'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We’re now ready to create our <code>DataLoaders</code>. To do this, we’ll use the <code>DataBlock</code> API, which is a flexible and convenient way to plug pieces of a data processing pipeline together:</p>
+<p>We’re now ready to create our <a href="https://bthek1.github.io/fastAIcourse/datasets.html#dataloaders"><code>DataLoaders</code></a>. To do this, we’ll use the <code>DataBlock</code> API, which is a flexible and convenient way to plug pieces of a data processing pipeline together:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> DataBlock(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    blocks<span class="op">=</span>(ImageBlock,CategoryBlock,CategoryBlock),</span>
@@ -570,7 +588,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> disease_loss(inp,disease,variety): <span class="cf">return</span> F.cross_entropy(inp,disease)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’re now ready to create our learner.</p>
-<p>There’s just one wrinkle to be aware of. Now that our <code>DataLoaders</code> is returning multiple targets, fastai doesn’t know how many outputs our model will need. Therefore we have to pass <code>n_out</code> when we create our <code>Learner</code> – we need <code>10</code> outputs, one for each possible disease:</p>
+<p>There’s just one wrinkle to be aware of. Now that our <a href="https://bthek1.github.io/fastAIcourse/datasets.html#dataloaders"><code>DataLoaders</code></a> is returning multiple targets, fastai doesn’t know how many outputs our model will need. Therefore we have to pass <code>n_out</code> when we create our <code>Learner</code> – we need <code>10</code> outputs, one for each possible disease:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>arch <span class="op">=</span> <span class="st">'convnext_small'</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, arch, loss_func<span class="op">=</span>disease_loss, metrics<span class="op">=</span>disease_err, n_out<span class="op">=</span><span class="dv">10</span>).to_fp16()</span>

@@ -109,13 +109,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="fastAIcourse - Collaborative Filtering">
 <meta property="og:description" content="Collaborative Filtering">
-<meta property="og:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/a9ed7638-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
+<meta property="og:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/cc5c0c62-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
 <meta property="og:site-name" content="fastAIcourse">
 <meta property="og:image:height" content="737">
 <meta property="og:image:width" content="1265">
 <meta name="twitter:title" content="fastAIcourse - Collaborative Filtering">
 <meta name="twitter:description" content="Collaborative Filtering">
-<meta name="twitter:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/a9ed7638-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
+<meta name="twitter:image" content="https://bthek1.github.io/fastAIcourse/070_collaborative-filtering-deep-dive_files/figure-html/cc5c0c62-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png">
 <meta name="twitter:image-height" content="737">
 <meta name="twitter:image-width" content="1265">
 <meta name="twitter:card" content="summary_large_image">
@@ -363,13 +363,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Matrix and tensor.html" class="sidebar-item-text sidebar-link">
+  <a href="./matrix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Matrix and tensor</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Backpropagation.html" class="sidebar-item-text sidebar-link">
+  <a href="./backpropagation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Backpropagation</span></a>
   </div>
 </li>
@@ -377,6 +377,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./minibatch_training.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mini Batch</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hugging Face Datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./convolutions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Convolutions</span></a>
   </div>
 </li>
     </ul>
@@ -552,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Although this has all the information we need, it is not a particularly helpful way for humans to look at this data. Here is the same data cross-tabulated into a human-friendly table:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/a9ed7638-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png" class="img-fluid figure-img"></p>
+<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/cc5c0c62-1-9cbc69a5-40ca-4406-9bde-0db7c9887870.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">image.png</figcaption>
 </figure>
 </div>
@@ -599,14 +617,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Step 1 of this approach is to randomly initialize some parameters. These parameters will be a set of latent factors for each user and movie. We will have to decide how many to use. We will discuss how to select this shortly, but for illustrative purposes let’s use 5 for now. Because each user will have a set of these factors and each movie will have a set of these factors, we can show these randomly initialized values right next to the users and movies in our crosstab, and we can then fill in the dot products for each of these combinations in the middle. For example, this is what it looks like in Microsoft Excel, with the top-left cell formula displayed as an example:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/47c4f866-1-dd6a4c5e-c820-4b32-a621-eb2d300be4da.png" class="img-fluid figure-img"></p>
+<p><img src="070_collaborative-filtering-deep-dive_files/figure-html/a39df6a8-1-dd6a4c5e-c820-4b32-a621-eb2d300be4da.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">image.png</figcaption>
 </figure>
 </div>
 <p>Step 2 of this approach is to calculate our predictions. As we’ve discussed, we can do this by simply taking the dot product of each movie with each user. If, for instance, the first latent user factor represents how much the user likes action movies and the first latent movie factor represents if the movie has a lot of action or not, the product of those will be particularly high if either the user likes action movies and the movie has a lot of action in it or the user doesn’t like action movies and the movie doesn’t have any action in it. On the other hand, if we have a mismatch (a user loves action movies but the movie isn’t an action film, or the user doesn’t like action movies and it is one), the product will be very low.</p>
 <p>Step 3 is to calculate our loss. We can use any loss function that we wish; let’s pick mean squared error for now, since that is one reasonable way to represent the accuracy of a prediction.</p>
 <p>That’s all we need. With this in place, we can optimize our parameters (that is, the latent factors) using stochastic gradient descent, such as to minimize the loss. At each step, the stochastic gradient descent optimizer will calculate the match between each movie and each user using the dot product, and will compare it to the actual rating that each user gave to each movie. It will then calculate the derivative of this value and will step the weights by multiplying this by the learning rate. After doing this lots of times, the loss will get better and better, and the recommendations will also get better and better.</p>
-<p>To use the usual <code>Learner.fit</code> function we will need to get our data into a <code>DataLoaders</code>, so let’s focus on that now.</p>
+<p>To use the usual <code>Learner.fit</code> function we will need to get our data into a <a href="https://bthek1.github.io/fastAIcourse/datasets.html#dataloaders"><code>DataLoaders</code></a>, so let’s focus on that now.</p>
 </section>
 <section id="creating-the-dataloaders" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-dataloaders">Creating the DataLoaders</h2>
@@ -725,7 +743,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>We can then build a <code>DataLoaders</code> object from this table. By default, it takes the first column for the user, the second column for the item (here our movies), and the third column for the ratings. We need to change the value of <code>item_name</code> in our case to use the titles instead of the IDs:</p>
+<p>We can then build a <a href="https://bthek1.github.io/fastAIcourse/datasets.html#dataloaders"><code>DataLoaders</code></a> object from this table. By default, it takes the first column for the user, the second column for the item (here our movies), and the third column for the ratings. We need to change the value of <code>item_name</code> in our case to use the titles instead of the IDs:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> CollabDataLoaders.from_df(ratings, item_name<span class="op">=</span><span class="st">'title'</span>, bs<span class="op">=</span><span class="dv">64</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -853,7 +871,7 @@ n_movies : 1665</code></pre>
 <section id="collaborative-filtering-from-scratch" class="level2">
 <h2 class="anchored" data-anchor-id="collaborative-filtering-from-scratch">Collaborative Filtering from Scratch</h2>
 <p>Before we can write a model in PyTorch, we first need to learn the basics of object-oriented programming and Python. If you haven’t done any object-oriented programming before, we will give you a quick introduction here, but we would recommend looking up a tutorial and getting some practice before moving on.</p>
-<p>The key idea in object-oriented programming is the <em>class</em>. We have been using classes throughout this book, such as <code>DataLoader</code>, <code>string</code>, and <code>Learner</code>. Python also makes it easy for us to create new classes. Here is an example of a simple class:</p>
+<p>The key idea in object-oriented programming is the <em>class</em>. We have been using classes throughout this book, such as <a href="https://bthek1.github.io/fastAIcourse/minibatch_training.html#dataloader"><code>DataLoader</code></a>, <code>string</code>, and <code>Learner</code>. Python also makes it easy for us to create new classes. Here is an example of a simple class:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Example:</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, a): <span class="va">self</span>.a <span class="op">=</span> a</span>
@@ -1161,7 +1179,7 @@ n_movies : 1665</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>loss_with_wd <span class="op">=</span> loss <span class="op">+</span> wd <span class="op">*</span> (parameters<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In practice, though, it would be very inefficient (and maybe numerically unstable) to compute that big sum and add it to the loss. If you remember a little bit of high school math, you might recall that the derivative of <code>p**2</code> with respect to <code>p</code> is <code>2*p</code>, so adding that big sum to our loss is exactly the same as doing:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>parameters.grad <span class="op">+=</span> wd <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In practice, since <code>wd</code> is a parameter that we choose, we can just make it twice as big, so we don’t even need the <code>*2</code> in this equation. To use weight decay in fastai, just pass <code>wd</code> in your call to <code>fit</code> or <code>fit_one_cycle</code>:</p>
+<p>In practice, since <code>wd</code> is a parameter that we choose, we can just make it twice as big, so we don’t even need the <code>*2</code> in this equation. To use weight decay in fastai, just pass <code>wd</code> in your call to <a href="https://bthek1.github.io/fastAIcourse/minibatch_training.html#fit"><code>fit</code></a> or <code>fit_one_cycle</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DotProductBias(n_users, n_movies, <span class="dv">50</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> Learner(dls, model, loss_func<span class="op">=</span>MSELossFlat())</span>

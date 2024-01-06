@@ -21,3 +21,6 @@ website:
       - 120_Matrix.ipynb
       - 130_Backpropagation.ipynb
       - 140_minibatch_training.ipynb
+      - 150_datasets.ipynb
+      - 160_foundations.ipynb
+      - 170_convolutions.ipynb
