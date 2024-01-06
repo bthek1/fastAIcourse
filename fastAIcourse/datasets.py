@@ -12,7 +12,7 @@ from torch.utils.data import default_collate
 from .training import *
 
 # %% auto 0
-__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict']
+__all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict', 'show_image', 'subplots']
 
 # %% ../nbs/150_datasets.ipynb 4
 import logging,pickle,gzip,os,time,shutil,torch,matplotlib as mpl
@@ -59,6 +59,40 @@ def collate_dict(ds):
     get = itemgetter(*ds.features)
     def _f(b): return get(default_collate(b))
     return _f
+
+# %% ../nbs/150_datasets.ipynb 38
+@fc.delegates(plt.Axes.imshow)
+def show_image(im, ax=None, figsize=None, title=None, noframe=True, **kwargs):
+    "Show a PIL or PyTorch image on `ax`."
+    if fc.hasattrs(im, ('cpu','permute','detach')):
+        im = im.detach().cpu()
+        if len(im.shape)==3 and im.shape[0]<5: im=im.permute(1,2,0)
+    elif not isinstance(im,np.ndarray): im=np.array(im)
+    if im.shape[-1]==1: im=im[...,0]
+    if ax is None: _,ax = plt.subplots(figsize=figsize)
+    ax.imshow(im, **kwargs)
+    if title is not None: ax.set_title(title)
+    ax.set_xticks([]) 
+    ax.set_yticks([]) 
+    if noframe: ax.axis('off')
+    return ax
+
+# %% ../nbs/150_datasets.ipynb 42
+@fc.delegates(plt.subplots, keep=True)
+def subplots(
+    nrows:int=1, # Number of rows in returned axes grid
+    ncols:int=1, # Number of columns in returned axes grid
+    figsize:tuple=None, # Width, height in inches of the returned figure
+    imsize:int=3, # Size (in inches) of images that will be displayed in the returned figure
+    suptitle:str=None, # Title to be set to returned figure
+    **kwargs
+): # fig and axs
+    "A figure and set of subplots to display images of `imsize` inches"
+    if figsize is None: figsize=(ncols*imsize, nrows*imsize)
+    fig,ax = plt.subplots(nrows, ncols, figsize=figsize, **kwargs)
+    if suptitle is not None: fig.suptitle(suptitle)
+    if nrows*ncols==1: ax = np.array([ax])
+    return fig,ax
 
 # %% ../nbs/150_datasets.ipynb 43
 from nbdev.showdoc import show_doc
