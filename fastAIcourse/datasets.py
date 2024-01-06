@@ -13,7 +13,7 @@ from .training import *
 
 # %% auto 0
 __all__ = ['collate_fn', 'transforms', 'inplace', 'transformi', 'D', 'collate_dict', 'show_image', 'subplots', 'get_grid',
-           'DataLoaders']
+           'show_images', 'DataLoaders']
 
 # %% ../nbs/150_datasets.ipynb 4
 import logging,pickle,gzip,os,time,shutil,torch,matplotlib as mpl
@@ -118,6 +118,16 @@ def get_grid(
     for i in range(n, nrows*ncols): axs.flat[i].set_axis_off()
     if title is not None: fig.suptitle(title, weight=weight, size=size)
     return fig,axs
+
+# %% ../nbs/150_datasets.ipynb 49
+def show_images(ims:list, # Images to show
+                nrows:int|None=None, # Number of rows in grid
+                ncols:int|None=None, # Number of columns in grid (auto-calculated if None)
+                titles:list|None=None, # Optional list of titles for each image
+                **kwargs):
+    "Show all images `ims` as subplots with `rows` using `titles`"
+    axs = get_grid(len(ims), nrows, ncols, **kwargs)[1].flat
+    for im,t,ax in zip_longest(ims, titles or [], axs): show_image(im, ax=ax, title=t)
 
 # %% ../nbs/150_datasets.ipynb 53
 class DataLoaders:
