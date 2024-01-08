@@ -20,6 +20,17 @@ from .conv import *
 
 from fastprogress import progress_bar,master_bar
 
+# %% ../nbs/190_learner.ipynb 3
+import matplotlib as mpl
+import torchvision.transforms.functional as TF
+from contextlib import contextmanager
+from torch import nn,tensor
+from datasets import load_dataset,load_dataset_builder
+from .datasets import *
+from .conv import *
+import logging
+from fastcore.test import test_close
+
 # %% ../nbs/190_learner.ipynb 10
 class Learner:
     def __init__(self, model, dls, loss_func, lr, opt_func=optim.SGD): fc.store_attr()
