@@ -17,14 +17,14 @@ from torch.utils.data import DataLoader,default_collate
 from torch.nn import init
 from torch.optim import lr_scheduler
 
-from miniai.datasets import *
-from miniai.conv import *
-from miniai.learner import *
-from miniai.activations import *
-from miniai.init import *
-from miniai.sgd import *
-from miniai.resnet import *
-from miniai.augment import *
+from .datasets import *
+from .conv import *
+from .learner import *
+from .activations import *
+from .init import *
+from .sgd import *
+from .resnet import *
+from .augment import *
 
 # %% ../nbs/270_DDPM_v2.ipynb 41
 class MixedPrecision(TrainCB):
