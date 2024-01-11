@@ -16,6 +16,7 @@ pip install -e '.[dev]'
 
 - Multi layer preception (MLP)
 - Convolution Neural Network (CNN) ex. ResNET, VGG
+- Neural Cellular Automata (NCA)
 
 ## Structure
 
