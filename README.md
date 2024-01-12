@@ -18,6 +18,14 @@ pip install -e '.[dev]'
 - Convolution Neural Network (CNN) ex. ResNET, VGG
 - Neural Cellular Automata (NCA)
 
+## Datasets
+
+- titanic
+- paddy disease
+- MNIST (number images 28 \* 28)
+- Fashion MNIST (clothing images 28 \* 28)
+- CIFAR - 10 (image classification dataset)
+
 ## Structure
 
 1.  Data process
