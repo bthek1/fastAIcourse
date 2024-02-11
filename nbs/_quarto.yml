@@ -11,8 +11,8 @@ format:
     
 website:
   title: "ML Tools"
-  image: "bird.jpg"
-  favicon: "bird.jpg"
+  image: "Logo.svg"
+  favicon: "favi.svg"
   reader-mode: true
   back-to-top-navigation: true
   page-navigation: true
@@ -25,7 +25,7 @@ website:
 
   navbar:
     background: dark
-    logo: "bird.jpg"
+    logo: "Logo.svg"
     logo-alt: "Quarto logo."
     collapse-below: lg
     title: false
