@@ -38,6 +38,8 @@ website:
           href: https://bthek1.github.io/FastAISetup/
         - text: " Fast AI course"
           href: https://bthek1.github.io/fastAIcourse/
+        - text: " Fast AI course"
+          href: https://bthek1.github.io/DeepLearning
           
       - text: "ML"
         menu:
