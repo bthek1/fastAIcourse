@@ -10,7 +10,7 @@ format:
     toc: true
     
 website:
-  title: "ML Tools"
+  title: "Benedict Thekkel"
   image: "Logo.svg"
   favicon: "favi.svg"
   reader-mode: true
@@ -31,51 +31,48 @@ website:
     title: false
     left:
       - text: "Blog"
-        href: https://bthek1.github.io/benedicts_blog/
+        href: https://bthek1.github.io/B_Blog/
+
       - text: "AI"
         menu:
-        - text: "Fast AI Setup"
-          href: https://bthek1.github.io/FastAISetup/
-        - text: " Fast AI course"
-          href: https://bthek1.github.io/fastAIcourse/
+        - text: "Computer Setup"
+          href: https://bthek1.github.io/Computer_Setup/
+        - text: "Fast AI course"
+          href: https://bthek1.github.io/FastAI_course/
+        - text: "DL Methods"
+          href: https://bthek1.github.io/DL_methods/
           
       - text: "ML"
         menu:
-        - text: "Machine Learning course"
-          href: https://bthek1.github.io/ML/
-        - text: "Machine Learning Libraries"
-          href: https://bthek1.github.io/MLtools/
-          
-      - text: "Timeseries"    
-        menu:
-        - text: "Time series course"
+        - text: "ML Methods"
+          href: https://bthek1.github.io/ML_methods/
+        - text: "Python Libraries"
+          href: https://bthek1.github.io/Python_Libs/
+        - text: "Time series"
           href: https://bthek1.github.io/TimeSeriesML/
+
           
       - text: "Web Development"
-        menu:
-        - text: "Documentation"
-          href: https://bthek1.github.io/webdevelopment_doc/
+        href: https://bthek1.github.io/WEB_doc/
           
       - text: "Nbdev Automation"
-        menu:
-        - text: "Automation lib"
-          href: https://bthek1.github.io/nbdevAuto/
+        href: https://bthek1.github.io/nbdevAuto/
           
       - text: "Help"
         menu:
           - text: "Report a Bug"
             icon: "bug"
-            href: "https://github.com/quarto-dev/quarto-cli/issues/new/choose"
+            href: "https://github.com/bthek1/B_Blog/issues"
           - text: "Ask a Question"
             icon: "chat-right-text"
-            href: "https://github.com/quarto-dev/quarto-cli/issues/new/choose"
+            href: "https://github.com/bthek1/B_Blog/issues"
           - text: "FAQ"
             icon: "question-circle"
-            href: "https://github.com/quarto-dev/quarto-cli/issues/new/choose"
+            href: "https://github.com/bthek1/B_Blog/issues"
           
     tools:
       - icon: github
-        href: "https://github.com/bthek1/benedicts_blog.git"
+        href: "https://github.com/bthek1"
         aria-label: Github
       - icon: linkedin
         href: "https://www.linkedin.com/in/benedict-thekkel/"
@@ -87,7 +84,7 @@ website:
       - text: "About"
         href: "index.ipynb"
       - text: "FAQ"
-        href: "https://github.com/bthek1/benedicts_blog/wiki"    
+        href: "https://github.com/bthek1/B_Blog/issues"    
       - text: "License"
         href: "https://bthek1.github.io/benedicts_blog/Index.html"
       - text: "Trademark"
@@ -96,7 +93,7 @@ website:
         
     right:
       - icon: github
-        href: "https://github.com/bthek1/benedicts_blog.git"
+        href: "https://github.com/bthek1"
         aria-label: Github
       - icon: linkedin
         href: "https://www.linkedin.com/in/benedict-thekkel/"
