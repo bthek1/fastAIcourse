@@ -4,7 +4,6 @@
 __all__ = ['plot_function']
 
 # %% ../nbs/021_how-does-a-neural-net-really-work.ipynb 7
-#|code-fold: true
 def plot_function(f, title=None, min=-2.1, max=2.1, color='r', ylim=None):
     import numpy as np, matplotlib.pyplot as plt
     from fastai.basics import torch
